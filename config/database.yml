@@ -1,17 +1,16 @@
-development:
- adapter: postgresql
- encoding: unicode
- database: js_duels_backend_development
- pool: 5
- username:
- password:
- host: 127.0.0.1
+development: &default
+  host: localhost
+  adapter: postgresql
+  database: react_development
+  encoding: utf8
+  min_messages: warning
+  pool: 5
+  timeout: 5000
 
 test:
- adapter: postgresql
- encoding: unicode
- database: js_duels_backend_test
- pool: 5
- username:
- password:
- host: 127.0.0.1
+  <<: *default
+  database: react_test
+
+production:
+  <<: *default
+  database: react_production

@@ -1,18 +1,18 @@
-source "https://rubygems.org"
+source "https://rubygems.org/"
 
-gem "sinatra"
-gem "pg"
-gem "activerecord"
+gem "pg", "~> 0.18"
+gem "rake"
+gem "sinatra", "~> 1.4"
 gem "sinatra-activerecord"
-gem "dotenv"
+
+group :test do
+  gem "capybara"
+  gem "database_cleaner"
+  gem "factory_girl"
+  gem "poltergeist"
+  gem "rspec"
+end
 
 group :test, :development do
   gem "pry"
-end
-
-group :test do
-  gem "rspec"
-  gem "capybara"
-  gem "shoulda-matchers"
-  gem "launchy"
 end
