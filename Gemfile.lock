@@ -70,6 +70,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    shoulda-matchers (2.8.0)
+      activesupport (>= 3.0.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -92,6 +94,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   capybara
   database_cleaner
   factory_girl
@@ -100,6 +103,7 @@ DEPENDENCIES
   pry
   rake
   rspec
+  shoulda-matchers (< 3.0.0)
   sinatra (~> 1.4)
   sinatra-activerecord
 

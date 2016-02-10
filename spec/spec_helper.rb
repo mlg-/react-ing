@@ -1,22 +1,41 @@
-# spec/spec_helper.rb
-
-ENV["RACK_ENV"] ||= "test"
-
-require_relative "../app"
+require "sinatra/activerecord"
+require "rack/test"
 require "rspec"
 require "capybara/rspec"
-require "capybara/poltergeist"
+require "shoulda-matchers"
 require "pry"
+require_relative "../app"
 
-spec_support_files = File.join(App.settings.root, "spec", "support", "**", "*.rb")
-Dir[spec_support_files].each { |file| require file }
+ENV["RACK_ENV"] = "test"
 
-Capybara.app = App
-Capybara.javascript_driver = :poltergeist
+Dir["./app/models/*.rb"].each { |file| require file }
+Dir["./app/seeders/*.rb"].each { |file| require file }
+
+ActiveRecord::Base.logger.level = 1
 
 RSpec.configure do |config|
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
   config.order = :random
-  Kernel.srand config.seed
+
+  config.before(:each) do
+    Book.destroy_all
+    Review.destroy_all
+  end
+end
+
+Capybara.app = Sinatra::Application
+
+include Rack::Test::Methods
+
+def app
+  Sinatra::Application
 end

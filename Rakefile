@@ -1,14 +1,15 @@
 # Rakefile
 
+require "./app"
+require "sinatra/activerecord/rake"
+require "rspec/core/rake_task"
+
 # configure sinatra-activerecord rake tasks
 namespace :db do
   task :load_config do
     require "./app"
   end
 end
-require "sinatra/activerecord/rake"
-require "rspec/core/rake_task"
-
 
 # create a task to run RSpec tests
 RSpec::Core::RakeTask.new do |task|
