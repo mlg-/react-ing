@@ -55,15 +55,20 @@ end
 
 get "/api/v1/books" do
   content_type :json
+  status 200
   @books = Book.order(:title)
   books = []
   @books.each do |book|
     books << {
-      book: book,
-      review_score: book.average_review_score,
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      description: book.description,
+      score: book.average_review_score,
       reviews: book.reviews
     }
   end
+
   books.to_json
 end
 
