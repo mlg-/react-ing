@@ -1,0 +1,15 @@
+<h1>Books</h1>
+<a href="/books/new">Add A Book</a>
+<br>
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <span class="book-review-score"><%= book.average_review_score %>, </span>
+      <span class="book-title">
+        <a href=<%= "/book/#{book.id}" %>><%= book.title %>,</a>
+      </span>
+      <span class="book-author"><%= book.author %></span>
+      <span class="book-desscription">: <%= book.description.slice(0, 100) %>...</span>
+    </li>
+  <% end %>
+</ul>

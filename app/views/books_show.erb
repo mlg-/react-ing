@@ -1,0 +1,48 @@
+<h1>
+  <%= @book.title %>
+</h1>
+
+<h2>
+  <%= @book.author %>
+</h2>
+
+<p>
+  <%= @book.description %>
+</p>
+
+<br>
+<ul>
+  <% @book.reviews.each do |review| %>
+    <li>
+      <span class="review-score"><%= review.score %></span>
+      <span class="review-description">: <%= review.description %></span>
+    </li>
+  <% end %>
+</ul>
+
+<br>
+<h1>Add A Review</h1>
+
+<br>
+<form action=<%= "/book/#{@book.id}/reviews/new" %> method="post">
+  <label for="review_score">Score</label>
+  <select id="review_score" name="review_score">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10" selected="selected">10</option>
+  </select>
+  <label for="review_description">Description</label>
+  <input type="text" id="review_description" name="review_description">
+  <input type="submit" value="Add Review"/>
+</form>
+
+<p>
+  <a href="/">Back to Index</a>
+</p>
