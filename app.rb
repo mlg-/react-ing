@@ -44,13 +44,19 @@ post "/books/new" do
 end
 
 #API endpoints
-get "/api/v1/book/:id" do
+get "/api/v1/books/:id" do
   content_type :json
-  @book = Book.find(params[:id].to_i)
-  {
-    book: @book,
-    reviews: @book.reviews
-  }.to_json
+  @book = Book.find(params[:id])
+  status 200
+  reviews = []
+  @book.reviews.each do |review|
+    reviews << {
+      id: review.id,
+      score: review.score,
+      description: review.description
+    }
+  end
+  reviews.to_json
 end
 
 get "/api/v1/books" do
@@ -68,7 +74,6 @@ get "/api/v1/books" do
       reviews: book.reviews
     }
   end
-
   books.to_json
 end
 
@@ -100,15 +105,22 @@ post "/api/v1/books" do
   end
 end
 
-post "/api/v1/book/:id/reviews/new" do
-  book = Book.find(params[:id].to_i)
+post "/api/v1/books/:id/reviews/new" do
+  book = Book.find(params[:id])
   review = Review.create(
     book: book,
-    score: params[:review_score].to_i,
-    description: params[:review_description]
+    score: params[:score],
+    description: params[:description]
   )
+  display_review = []
+  display_review << {
+    id: review.id,
+    score: review.score,
+    description: review.description
+  }
   if review.valid?
     status 200
+    display_review.to_json
   else
     status 422
   end
