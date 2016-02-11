@@ -15,7 +15,7 @@ get "/" do
   erb :index
 end
 
-get "/book/:id" do
+get "/books/:id" do
   @book = Book.find(params[:id].to_i)
   erb :books_show
 end
