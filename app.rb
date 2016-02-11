@@ -11,7 +11,6 @@ set :views, Proc.new { File.join(root, "app/views") }
 
 #HTTP Views
 get "/" do
-  @books = Book.order(:title)
   erb :index
 end
 
@@ -101,7 +100,6 @@ post "/api/v1/books" do
     books.to_json
   else
     status 422
-    books.to_json
   end
 end
 

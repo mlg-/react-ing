@@ -1,9 +1,9 @@
 var Book = React.createClass({
   render: function(){
     return (
-      <div className="book">
+      <li className="book">
         {this.props.children}
-      </div>
+      </li>
     );
   }
 });
@@ -67,13 +67,16 @@ var BookList = React.createClass({
           <Book title={book.title} key={book.id}>
             <h2>{BookLinkTag}</h2>
             <h3>{book.author}</h3>
+            <h4>Average Rating: {book.score}</h4>
             <p>{book.description}</p>
           </Book>
         );
       });
       return(
         <div className="bookList">
+        <ul>
           {bookNodes}
+        </ul>
         </div>
     );
   }

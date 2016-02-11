@@ -10,15 +10,20 @@ feature "api/v1/books" do
     expect(last_response.body).to eq(
       [
         {
-          book: book1,
-          review_score: book1.average_review_score,
+          id: book1.id,
+          title: book1.title,
+          author: book1.author,
+          description: book1.description,
+          score: book1.average_review_score,
           reviews: book1.reviews
         },
         {
-          book: book2,
-          review_score: book2.average_review_score,
-          reviews: book2.reviews
-        }
+          id: book2.id,
+          title: book2.title,
+          author: book2.author,
+          description: book2.description,
+          score: book2.average_review_score,
+          reviews: book2.reviews        }
       ].to_json
     )
   end

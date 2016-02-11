@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "user views books index" do
+feature "user views books index", js: true do
   let!(:book1) {
     Book.create(
       title: "zoolander's guide to zoology",
