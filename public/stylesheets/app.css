@@ -20,7 +20,7 @@ input {
   margin-bottom: 1.5em;
 }
 
-button {
+input[type="submit"] {
   background: #25A6E1;
   background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
   background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
