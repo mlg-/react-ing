@@ -2,6 +2,7 @@ require "sinatra/activerecord"
 require "rack/test"
 require "rspec"
 require "capybara/rspec"
+require 'capybara/poltergeist'
 require "shoulda-matchers"
 require "pry"
 require_relative "../app"
@@ -33,6 +34,7 @@ RSpec.configure do |config|
 end
 
 Capybara.app = Sinatra::Application
+Capybara.javascript_driver = :poltergeist
 
 include Rack::Test::Methods
 

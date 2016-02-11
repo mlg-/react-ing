@@ -1,20 +1,15 @@
 require "spec_helper"
 
-feature "user adds a book" do
+feature "user adds a book", js: true do
   scenario "user adds a book" do
     visit "/"
-    expect(page).not_to have_content "Book Title"
+    expect(page).not_to have_content "Flagrant Acts of Nope"
 
-    click_on "Add A Book"
-    expect(page).to have_content "Add A Book"
-    click_on "Back to Index"
-    expect(page).to have_content "Books"
-    click_on "Add A Book"
+    fill_in "Title", with: "Flagrant Acts of Nope"
+    fill_in "Author", with: "Book Author"
+    fill_in "Description", with: "This is the description for a book that is interesting"
+    click_on "Add Your Favorite Book!"
 
-    fill_in :book_title, with: "Book Title"
-    fill_in :book_author, with: "Book Author"
-    fill_in :book_description, with: "This is the description for a book that is interesting"
-    click_on "Add"
-    expect(page).to have_content "Book Title"
+    expect(page).to have_content "Flagrant Acts of Nope"
   end
 end
