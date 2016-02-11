@@ -2,9 +2,6 @@ var Book = React.createClass({
   render: function(){
     return (
       <div className="book">
-        <h2 className="bookTitle">
-          {this.props.title}
-        </h2>
         {this.props.children}
       </div>
     );
@@ -64,9 +61,13 @@ var BookBox = React.createClass({
 var BookList = React.createClass({
   render: function() {
       var bookNodes = this.props.data.map(function(book){
+        var bookLink = "/books/" + book.id;
+        var BookLinkTag = React.createElement('a', {href: bookLink}, book.title);
         return (
           <Book title={book.title} key={book.id}>
-            {book.author} {book.description}
+            <h2>{BookLinkTag}</h2>
+            <h3>{book.author}</h3>
+            <p>{book.description}</p>
           </Book>
         );
       });
@@ -80,7 +81,7 @@ var BookList = React.createClass({
 
 var BookForm = React.createClass({
   getInitialState: function() {
-    return {title: '', author: '', description: ''};
+    return {id: '', title: '', author: '', description: ''};
   },
   handleTitleChange: function(e) {
     this.setState({title: e.target.value});
