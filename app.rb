@@ -72,16 +72,31 @@ get "/api/v1/books" do
   books.to_json
 end
 
-post "/api/v1/books/new" do
+post "/api/v1/books" do
+  content_type :json
   book = Book.create(
     title: params[:title],
     author: params[:author],
     description: params[:description]
   )
+  @books = Book.order(:title)
+  books = []
+  @books.each do |book|
+    books << {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      description: book.description,
+      score: book.average_review_score,
+      reviews: book.reviews
+    }
+  end
   if book.valid?
     status 200
+    books.to_json
   else
     status 422
+    books.to_json
   end
 end
 

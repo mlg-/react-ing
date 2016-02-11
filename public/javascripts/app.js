@@ -25,6 +25,25 @@ var BookBox = React.createClass({
       }.bind(this)
     });
   },
+  handleBookSubmit: function(book) {
+    var books = this.state.data;
+    book.id = Date.now();
+    var newBooks = books.concat([book]);
+    this.setState({data: newBooks});
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: book,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.setState({data: books});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
   getInitialState: function() {
     return {data: []};
   },
@@ -35,10 +54,9 @@ var BookBox = React.createClass({
   render: function() {
     return (
       <div className="bookBox">
-        <BookForm />
+        <BookForm onBookSubmit={this.handleBookSubmit} />
         <BookList data={this.state.data} />
       </div>
-
     );
   }
 });
@@ -61,17 +79,58 @@ var BookList = React.createClass({
 });
 
 var BookForm = React.createClass({
+  getInitialState: function() {
+    return {title: '', author: '', description: ''};
+  },
+  handleTitleChange: function(e) {
+    this.setState({title: e.target.value});
+  },
+  handleAuthorChange: function(e) {
+    this.setState({author: e.target.value});
+  },
+  handleDescriptionChange: function(e) {
+    this.setState({description: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var title = this.state.title.trim();
+    var author = this.state.author.trim();
+    var description = this.state.description.trim();
+    if (!title || !author || !description) {
+      return;
+    }
+    this.props.onBookSubmit({title: title, author: author, description: description});
+    this.setState({title: '', author: '', description: ''});
+  },
   render: function() {
     return (
-      <div className="bookForm">
-        Hello, world! I am a Book form.
-      </div>
-    )
+      <form className="bookForm" onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          placeholder="Title"
+          value={this.state.title}
+          onChange={this.handleTitleChange}
+         /> <br/>
+        <input
+          type="text"
+          placeholder="Author"
+          value={this.state.author}
+          onChange={this.handleAuthorChange}
+         /> <br/>
+        <input
+          type="text"
+          placeholder="Description"
+          value={this.state.description}
+          onChange={this.handleDescriptionChange}
+        /> <br/>
+        <input type="submit" value="Add Your Favorite Book!" />
+      </form>
+    );
   }
 });
 
 
 ReactDOM.render(
-  <BookBox url="/api/v1/books" pollInterval={2000} />,
+  <BookBox url="/api/v1/books" pollInterval={2000000000} />,
   document.getElementById('content')
 );
