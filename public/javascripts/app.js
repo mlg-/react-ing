@@ -131,6 +131,6 @@ var BookForm = React.createClass({
 
 
 ReactDOM.render(
-  <BookBox url="/api/v1/books" pollInterval={2000000000} />,
+  <BookBox url="/api/v1/books" pollInterval={2000} />,
   document.getElementById('content')
 );
